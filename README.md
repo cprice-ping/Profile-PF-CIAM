@@ -1,4 +1,11 @@
-This profile provides a base configuration for PingFederate.
+This profile provides a CIAM configuration for PingFederate - it starts with [PF-Base](https://github.com/cprice-ping/Profile-PF-Base) and makes the following modifications:
+
+* Replaces PingID with PingID SDK
+* Adds CIBA to the OIDC AS
+ * Adds the PingID SDK CIBA Authenticator
+* [Planned] Adds PingAccess
+ * [Planned] Adds Web App with Header injection
+ * [Planned] Adds API with CIBA Authentication
 
 It uses Postman to do an Admin API collection set to fully configure PF from a Ping Docker image.
 
@@ -31,27 +38,26 @@ This configuration includes:
 * HTML Form
 * HTML Form with LIP
 * Identifier-First (Passwordless)
-* PingID
+* PingID SDK
 
-### PingID - Special Considerations
+### PingID SDK - Special Considerations
 The PingID adapter uses the secrets from your PingID tenant to create the proper calls to the service. As such, storing those values in a public location, such as GitHub, should be considered **risky**.
 
-For this Profile, you can place the text from a `pingid.properties` file into `postman_vars.json`. The API calls will base64 encode and inject into the PingID Adapter and HTML Form (for Self-Service Password Reset)
+For this Profile, you can place the text from a `pingidsdk.properties` file into `postman_vars.json`. The API calls will base64 encode and inject into the PingID Adapter and HTML Form (for Self-Service Password Reset)
 
 ### Authentication Policy
 Extended Property Selector
-  * Basic (HTML Form)
   * Enhanced (HTML Form with LIP)
-  * MFA (Enhanced --> PingID)
-  * Passwordless (ID-First --> PingID)
+  * MFA (Enhanced --> PingID SDK)
+  * Passwordless (ID-First --> PingID SDK)
+  * [Planned] QR-Code (PingID SDK)
 
 The Authentication Experience is controlled by setting the `Extended Properties` on the Application.   
 
 ### Extended Properties
-* `Basic` (Plain HTML Form) *default*
-* `Enhanced` (HTML Form with LIP --  Facebook & QR Code buttons [not configured])
-* `MFA` (HTML Form with LIP --> PingID adapter)
-* `Passwordless` (ID-First --> PingID)
+* `Enhanced` (HTML Form with LIP --  Facebook [not configured] & QR Code buttons) *default*
+* `MFA` (HTML Form with LIP --> PingID SDK adapter)
+* `Passwordless` (ID-First --> PingID SDK)
 * _Anything Else_ (AuthN API Explorer)
 
 ### Authentication API
