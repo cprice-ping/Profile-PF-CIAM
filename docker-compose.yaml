@@ -13,7 +13,6 @@ services:
     - SERVER_PROFILE_PATH=pingfed
     - SERVER_PROFILE_PARENT=BASE
     # Layered PF-Base Profile
-    - SERVER_PROFILE_BASE_BRANCH=api-testing
     - SERVER_PROFILE_BASE_URL=https://github.com/cprice-ping/Profile-PF-Base.git
     - SERVER_PROFILE_BASE_PATH=pingfed
     - SERVER_PROFILE_BASE_BRANCH=api-testing
