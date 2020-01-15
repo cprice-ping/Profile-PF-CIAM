@@ -43,9 +43,10 @@ Credentials (LDAP):
 This configuration includes:
 
 ### Adapters
-* HTML Form
+* HTML Form (Not Used)
 * HTML Form with LIP
 * Identifier-First (Passwordless)
+* PingID (Not Used)
 * PingID SDK
 
 ### PingID SDK - Special Considerations
