@@ -12,7 +12,7 @@ It uses Postman to do an Admin API collection set to fully configure PF from a P
 
 The Postman collections are documented here:  
 * [PF Admin API - Base](https://documenter.getpostman.com/view/1239082/SWLh4RQB)
-* [PF Admin API - CIAM](https://documenter.getpostman.com/view/1239082/SWLh4RQB)
+* [PF Admin API - CIAM](https://documenter.getpostman.com/view/1239082/SWLk4kLF)
 
 **Note:** These collections are injected as services in the `docker-compose.yaml`.  
 
