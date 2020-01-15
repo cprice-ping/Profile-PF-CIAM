@@ -1,16 +1,24 @@
 This profile provides a CIAM configuration for PingFederate - it starts with [PF-Base](https://github.com/cprice-ping/Profile-PF-Base) and makes the following modifications:
 
 * Replaces PingID with PingID SDK
+ * Creates PID SDK Email Template for PF AuthN
+ * Uses PID SDK in MFA Policy
 * Adds CIBA to the OIDC AS
  * Adds the PingID SDK CIBA Authenticator
-* [Planned] Adds PingAccess
- * [Planned] Adds Web App with Header injection
- * [Planned] Adds API with CIBA Authentication
+* [Planned] PA configuration (PA-Base \ PA-CIAM)
+
 
 It uses Postman to do an Admin API collection set to fully configure PF from a Ping Docker image.
 
-The Postman collection is documented here: [PF Admin API - Configure Server](https://documenter.getpostman.com/view/1239082/SWLh4RQB)
+The Postman collections are documented here:  
+* [PF Admin API - Base](https://documenter.getpostman.com/view/1239082/SWLh4RQB)
+* [PF Admin API - CIAM](https://documenter.getpostman.com/view/1239082/SWLh4RQB)
 
+**Note:** These collections are injected as services in the `docker-compose.yaml`.  
+
+If desired, they can be run manually in either Postman Collection Runner, or with Newman: `run {{collection url}} -e postman_vars.json --insecure --ignore-redirects`
+
+---
 ## Deployment
 * Copy the `docker-compose.yaml`, `env_vars.sample` and `postman_vars.json.sample` files to a folder
 * Rename files to `env_vars` and `postman_vars.json`
