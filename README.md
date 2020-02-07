@@ -3,10 +3,7 @@ This profile provides a CIAM configuration for PingFederate - it starts with [PF
 * Replaces PingID with PingID SDK
  * Creates PID SDK Email Template for PF AuthN
  * Uses PID SDK in MFA Policy
-* Adds CIBA to the OIDC AS
- * Adds the PingID SDK CIBA Authenticator
 * [Planned] PA configuration (PA-Base \ PA-CIAM)
-
 
 It uses Postman to do an Admin API collection set to fully configure PF from a Ping Docker image.
 
@@ -52,7 +49,7 @@ This configuration includes:
 ### PingID SDK - Special Considerations
 The PingID adapter uses the secrets from your PingID tenant to create the proper calls to the service. As such, storing those values in a public location, such as GitHub, should be considered **risky**.
 
-For this Profile, you can place the text from a `pingidsdk.properties` file into `postman_vars.json`. The API calls will base64 encode and inject into the PingID Adapter and HTML Form (for Self-Service Password Reset)
+For this Profile, you can place the text from a `pingidsdk.properties` file into `postman_vars.json`. The API calls will base64 encode and inject into the PingIDSDK Adapter and HTML Form (for Self-Service Password Reset)
 
 ### Authentication Policy
 Extended Property Selector

@@ -8,14 +8,13 @@ services:
       - ~/.pingidentity/devops
       - ./env_vars
     environment:
-    # The CIAM Profile
+    # Start with the PF-Base Server Profile
+    - SERVER_PROFILE_BASE_URL=https://github.com/cprice-ping/Profile-PF-Base.git
+    - SERVER_PROFILE_BASE_PATH=pingfed
+    # Add the PF-CIAM Profile to install the PingIDSDK Integration Kit
     - SERVER_PROFILE_URL=https://github.com/cprice-ping/Profile-PF-CIAM.git
     - SERVER_PROFILE_PATH=pingfed
     - SERVER_PROFILE_PARENT=BASE
-    # Layered PF-Base Profile
-    - SERVER_PROFILE_BASE_URL=https://github.com/cprice-ping/Profile-PF-Base.git
-    - SERVER_PROFILE_BASE_PATH=pingfed
-    - SERVER_PROFILE_BASE_BRANCH=api-testing
     #volumes:
     #  - ${HOME}/projects/devops/volumes/full-stack.pingfederate:/opt/out
     #  - ${HOME}/projects/devops/pingidentity-server-profiles/baseline/pingfederate:/opt/in
@@ -32,7 +31,7 @@ services:
     command: run https://www.getpostman.com/collections/2e0df14dcf26f1ddb39a -e postman_vars.json --insecure --ignore-redirects
     volumes: 
       # An environment file should be injected into the image - this file should contain your specfic info and secrets
-      - ./postman_vars.json:/etc/newman/postman_vars.json
+      - ./pf_base_vars.json:/etc/newman/postman_vars.json
     networks:
       - pingnet-internal
 
@@ -42,10 +41,27 @@ services:
     command: run https://www.getpostman.com/collections/b17a3494b4f4d54de628 -e postman_vars.json --insecure --ignore-redirects
     volumes:
       # An environment file should be injected into the image - this file should contain your specfic info and secrets
-      - ./postman_vars.json:/etc/newman/postman_vars.json
+      - ./pf_ciam_vars.json:/etc/newman/postman_vars.json
     networks:
       - pingnet-internal
 
+  # Configure PA with ACME Managed certificate
+  pa-config-proxy:
+    image: postman/newman
+    command: run https://www.getpostman.com/collections/eaa397bd3a35ef3095c1 -e postman_vars.json --insecure --ignore-redirects
+    volumes:
+        # An environment file should be injected into the image - this file should contain your specfic info and secrets
+        - ./pa_proxy_vars.json:/etc/newman/postman_vars.json
+
+  pingaccess:
+    image: pingidentity/pingaccess:edge
+    ports:
+      - 80:8080
+      - 443:3000
+    networks: 
+      - pingnet-internal
+      - pingnet-dmz
+  
   pingdirectory:
     image: pingidentity/pingdirectory:edge
     env_file:
