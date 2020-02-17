@@ -18,11 +18,6 @@
 			"enabled": true
 		},
 		{
-			"key": "userBaseDN",
-			"value": "dc=example.com",
-			"enabled": true
-		},
-		{
 			"key": "oauthSecret",
 			"value": "2FederateM0re",
 			"enabled": true
@@ -42,6 +37,16 @@
 			"value": "fe92b82b-dc17-4a3d-a864-990a6f0e30d9",
 			"enabled": true
 		},
+		{
+			"key": "sdkAppRedirectUri",
+			"value": "com.cpricelab.ciba://cb",
+			"enabled": true
+		}
+		{
+			"key": "pfAuthnApiUrl",
+			"value": "https://ext-docker.cpricelab.com:9031/pf-ws/authn/explorer",
+			"enabled": true
+		}
 	],
 	"_postman_variable_scope": "environment",
 	"_postman_exported_at": "2020-01-19T16:20:21.572Z",
