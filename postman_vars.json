@@ -44,7 +44,7 @@
         },
         {
             "key": "pfAuthnApiUrl",
-            "value": "https://cold-handstand.glitch.me",
+            "value": "{{pfBaseURL}}/pf-ws/authn/explorer",
             "enabled": true
         },
         {

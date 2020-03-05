@@ -85,10 +85,9 @@ The Authentication Experience is controlled by setting the `Extended Properties`
 * `Enhanced` (HTML Form with LIP --  Facebook [not configured] & QR Code buttons) *default*
 * `MFA` (HTML Form with LIP --> PingID SDK adapter)
 * `Passwordless` (ID-First --> PingID SDK)
-* _Anything Else_ (AuthN API Explorer)
 
 ### Authentication API
-The AuthN API is enabled -- any value in the Extended Property *other* than the above will trigger it.
+The AuthN API is enabled -- a value in the Extended Property of `API` will trigger it.
 * ID-First --> HTML Form with LIP --> AuthN API Explorer 
 
 ### [Optional] Applications ([Collection](https://www.getpostman.com/collections/9bd0b2aa44487c0204f0))
@@ -110,7 +109,7 @@ https://`${PF_BASE_URL}`/idp/startSSO.ping?PartnerSpId=Dummy-SAML
 ### CIBA Authenticators
 * Email
 * PingID SDK
-**Note:** Configuration is done with  [Use Case: Add CIBA to CIAM](https://www.getpostman.com/collections/246ba03433c2ffe26de0)
+  * **Note:** Configuration is done with  [Use Case: Add CIBA to CIAM](https://www.getpostman.com/collections/246ba03433c2ffe26de0)
 
 ### Users
 `user.[0-4]` / `2FederateM0re`
