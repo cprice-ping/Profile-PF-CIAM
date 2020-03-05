@@ -1,32 +1,6 @@
-This profile provides a CIAM configuration for PingFederate - it starts with [PF-Base](https://github.com/cprice-ping/Profile-PF-Base) and makes the following modifications:
+This Solution provides a CIAM configuration for PingDirectory \ PingFederate
 
-* Adds Local Identity Profile
-  * Adds Default Identity Profile
-  * Adds HTML Form with LIP
-* Adds Authentication API Application
-* Adds PingID SDK Components
-  * Creates PID SDK Email Template for PF AuthN
-  * Adds SDK Connector to auto-enroll email \ SMS
-  * SSPR configured to use PID SDK
-* AuthN Policy - Default (Extended Property -- `authnExp`)
-  * `Basic` -- HTML Form with LIP (including User Registration)
-  * `MFA` -- HTML Form with LIP --> PingID SDK Adapter
-  * `Passwordless` -- ID-First --> PingID SDK Adapter
-* AuthN Policy - API Application (Extended Property -- `authnExp`)
-  * `API` -- ID-First --> HTML Form with LIP (with AuthN API Application)
-* AuthN Policy -- Fallback (used for anything without an Ext Prop -- i.e. Profile Management)
-* AuthN Policy -- Forgot Password (Used for SSPR)
-  * PID SDK Adapter
-* Adds 3rd Party Risk IKs (not configured)
-  * iOvation
-  * ID Data Web
-* Adds CIBA Authenticators
-  * Email
-  * PID SDK
-  * **Note:** Requires - [Use Case: Add CIBA to CIAM](https://www.getpostman.com/collections/246ba03433c2ffe26de0) to configure
-* [Planned] PA configuration (PA-Base \ PA-CIAM)
-
-This solution is based on a layered set of Use Cases:
+It is based on a layered set of Use Cases:
 
 API Collections (Required): 
 * Use Case: PD - Baseline
@@ -68,30 +42,42 @@ https://{{PF_HOSTNAME}}:9999/pingfederate
 Credentials (LDAP):  
 `Administrator` / `2FederateM0re`
 
-**Note:** Since the Admin account is in LDAP, you *will* see the First Run Wizard in the Admin UI. You can just click `Next` through it to get to the configured server.
-
-(This does not affect the Runtime operations)
-
 This configuration includes:
 
 ### Adapters
-* HTML Form (Not Used)
 * HTML Form with LIP
 * Identifier-First (Passwordless)
-* PingID (Not Used)
 * PingID SDK
+* iOvation IK (not configured)
+* ID Data Web IK (not configured)
+
+### Connections
+* PingID SDK Connector
+  * Auto-enrollment of Email \ SMS -- `(mail=*)`
 
 ### PingID SDK - Special Considerations
 The PingID adapter uses the secrets from your PingID tenant to create the proper calls to the service. As such, storing those values in a public location, such as GitHub, should be considered **risky**.
 
 For this Profile, you can place the text from a `pingidsdk.properties` file into `postman_vars.json`. The API calls will base64 encode and inject into the PingIDSDK Adapter and HTML Form (for Self-Service Password Reset)
 
-### Authentication Policy
+### AuthN Policy - Default AuthN Experiences
 Extended Property Selector
-  * Enhanced (HTML Form with LIP)
-  * MFA (Enhanced --> PingID SDK)
-  * Passwordless (ID-First --> PingID SDK)
-  * [Planned] QR-Code (PingID SDK)
+* `Basic` (HTML Form with LIP)
+* `MFA` (HTML Form with LIP --> PingID SDK)
+* `Passwordless` (ID-First --> PingID SDK)
+* [Planned] QR-Code (PingID SDK)
+
+### AuthN Policy - Default AuthN API
+Extended Property Selector
+* `API` (ID-First --> HTML Form with LIP)
+
+### AuthN Policy - Failback
+Used for anything without an Ext Prop -- i.e. LIP Profile Management
+* HTML Form with LIP
+
+### AuthN Policy - Forgot Password
+Used to allow PID SDK for SSPR
+* PID SDK Adapter
 
 The Authentication Experience is controlled by setting the `Extended Properties` on the Application.   
 
@@ -105,7 +91,7 @@ The Authentication Experience is controlled by setting the `Extended Properties`
 The AuthN API is enabled -- any value in the Extended Property *other* than the above will trigger it.
 * ID-First --> HTML Form with LIP --> AuthN API Explorer 
 
-### Applications
+### [Optional] Applications ([Collection](https://www.getpostman.com/collections/9bd0b2aa44487c0204f0))
 Two applications are pre-wired:
 
 **SAML:**  
@@ -121,7 +107,10 @@ https://`${PF_BASE_URL}`/idp/startSSO.ping?PartnerSpId=Dummy-SAML
 `client_id` == PingIntrospect  
 `client_secret` == 2FederateM0re
 
-### Users
-If you are using the BASELINE PingDirectory image, the credentials you can use for these applications are:
+### CIBA Authenticators
+* Email
+* PingID SDK
+**Note:** Configuration is done with  [Use Case: Add CIBA to CIAM](https://www.getpostman.com/collections/246ba03433c2ffe26de0)
 
+### Users
 `user.[0-4]` / `2FederateM0re`
