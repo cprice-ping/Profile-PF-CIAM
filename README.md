@@ -1,15 +1,50 @@
 This profile provides a CIAM configuration for PingFederate - it starts with [PF-Base](https://github.com/cprice-ping/Profile-PF-Base) and makes the following modifications:
 
-* Replaces PingID with PingID SDK
- * Creates PID SDK Email Template for PF AuthN
- * Uses PID SDK in MFA Policy
+* Adds Local Identity Profile
+  * Adds Default Identity Profile
+  * Adds HTML Form with LIP
+* Adds Authentication API Application
+* Adds PingID SDK Components
+  * Creates PID SDK Email Template for PF AuthN
+  * Adds SDK Connector to auto-enroll email \ SMS
+  * SSPR configured to use PID SDK
+* AuthN Policy - Default (Extended Property -- `authnExp`)
+  * `Basic` -- HTML Form with LIP (including User Registration)
+  * `MFA` -- HTML Form with LIP --> PingID SDK Adapter
+  * `Passwordless` -- ID-First --> PingID SDK Adapter
+* AuthN Policy - API Application (Extended Property -- `authnExp`)
+  * `API` -- ID-First --> HTML Form with LIP (with AuthN API Application)
+* AuthN Policy -- Fallback (used for anything without an Ext Prop -- i.e. Profile Management)
+* AuthN Policy -- Forgot Password (Used for SSPR)
+  * PID SDK Adapter
+* Adds 3rd Party Risk IKs (not configured)
+  * iOvation
+  * ID Data Web
+* Adds CIBA Authenticators
+  * Email
+  * PID SDK
+  * **Note:** Requires - [Use Case: Add CIBA to CIAM](https://www.getpostman.com/collections/246ba03433c2ffe26de0) to configure
 * [Planned] PA configuration (PA-Base \ PA-CIAM)
 
-It uses Postman to do an Admin API collection set to fully configure PF from a Ping Docker image.
+This solution is based on a layered set of Use Cases:
 
-The Postman collections are documented here:  
-* [PF Admin API - Base](https://documenter.getpostman.com/view/1239082/SWLh4RQB)
-* [PF Admin API - CIAM](https://documenter.getpostman.com/view/1239082/SWLk4kLF)
+API Collections (Required): 
+* Use Case: PD - Baseline
+  * [Documentation]()
+  * [Collection](https://www.getpostman.com/collections/251528ba1c88b823da85)
+* Use Case: PF - Initial
+  * [Collection](https://www.getpostman.com/collections/f8e24e4e53f7059beb10)
+* Use Case: PF - CIAM
+  * [Collection](https://www.getpostman.com/collections/b17a3494b4f4d54de628)
+* [Optional] Use Case: PF - Add Sample Apps
+  * [Collection](https://www.getpostman.com/collections/9bd0b2aa44487c0204f0)
+* [Optional] Use Case: PF - Add CIBA to CIAM
+  * [Collection](https://www.getpostman.com/collections/246ba03433c2ffe26de0)
+
+Server Profiles:
+[PD-Base Profile](https://github.com/cprice-ping/Profile-PD-Base)
+[PF-Base Profile](https://github.com/cprice-ping/Profile-PF-Base)
+[PF-CIAM Profile](https://github.com/cprice-ping/Profile-PF-CIAM)
 
 **Note:** These collections are injected as services in the `docker-compose.yaml`.  
 
