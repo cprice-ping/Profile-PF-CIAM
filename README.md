@@ -16,9 +16,9 @@ API Collections (Required):
   * [Collection](https://www.getpostman.com/collections/246ba03433c2ffe26de0)
 
 Server Profiles:
-[PD-Base Profile](https://github.com/cprice-ping/Profile-PD-Base)
-[PF-Base Profile](https://github.com/cprice-ping/Profile-PF-Base)
-[PF-CIAM Profile](https://github.com/cprice-ping/Profile-PF-CIAM)
+* [PD-Base Profile](https://github.com/cprice-ping/Profile-PD-Base)
+* [PF-Base Profile](https://github.com/cprice-ping/Profile-PF-Base)
+* [PF-CIAM Profile](https://github.com/cprice-ping/Profile-PF-CIAM)
 
 **Note:** These collections are injected as services in the `docker-compose.yaml`.  
 
